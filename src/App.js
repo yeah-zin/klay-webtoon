@@ -1,22 +1,31 @@
-import logo from './logo.svg';
-import './App.css';
+import React, { useState } from "react";
+import QRCode from "qrcode.react";
+import * as KlipAPI from "./api/UseKlip";
+import "./App.css";
+
+const DEFAULT_QR_CODE = "DEFAULT";
 
 function App() {
+  const [qrvalue, setQrvalue] = useState(DEFAULT_QR_CODE);
+  const onClickGetAddress = () => {
+    KlipAPI.getAddress(setQrvalue);
+  };
+
   return (
     <div className="App">
       <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
+        <button
+          onClick={() => {
+            onClickGetAddress();
+          }}
         >
-          Learn React
-        </a>
+          주소 가져오기
+        </button>
+        <br></br>
+        <br></br>
+        <QRCode value={qrvalue} />
+
+        <br></br>
       </header>
     </div>
   );
